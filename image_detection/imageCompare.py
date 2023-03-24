@@ -2,11 +2,15 @@ import cv2
 import numpy as np
 import sys
 from datetime import datetime
+import nanocamera as nanocamera
+import time
 
 # to install cv2:
 # pip install opencv-contrib-python
 
 # define the function to compute MSE between two images
+frame1 = None
+frame2 = None
 def mse(img1, img2):
    h, w = img1.shape
    print(img1.size, img2.size)
@@ -30,15 +34,26 @@ def getDiff(imageName1, imageName2):
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-# getDiff('hands1.jpeg', 'nohands1.jpeg')
-# getDiff('hands1.jpeg', 'nohands2.jpeg')
-# getDiff('nohands1.jpeg', 'nohands2.jpeg')
+def liveCapture():
+    camera = nano.Camera(flip=0, width=1280, height=800)
+    while camera.isReady():
+        tmp_frame = camera.read()
+        if (frame1 == None): frame1 = tmp_frame
+        elif (frame2 == None): frame2 = tmp_frame
+        elif: 
+            frame1 = tmp_frame
+            frame2 = None
+        cv2.imshow("Video Frame", frame)
+        print("type of frame: " + type(frame))
+        time.sleep(1)
+
 
 def main():
-    args = sys.argv[1:]
-    imageName1, imageName2 = args[0]+".jpg", args[1]+".jpg"
-    print(imageName1 + ",  " + imageName2)
-    getDiff(imageName1, imageName2)
+    liveCapture()
+    # args = sys.argv[1:]
+    # imageName1, imageName2 = args[0]+".jpg", args[1]+".jpg"
+    # print(imageName1 + ",  " + imageName2)
+    # getDiff(imageName1, imageName2)
 
 main()
 
